@@ -11,6 +11,9 @@ no deploy step lives in this repo.
 
 ## Endpoints
 
-- `GET /api/health` — liveness check.
+- `GET /healthz` — liveness check. Fixed contract checked by
+  `agent-orchestrator`'s `internal/demo/playwright/demo.spec.js` — do not
+  rename or change its response shape without updating that script.
+- `GET /api/health` — same liveness check, Next.js-idiomatic path.
 
 <!-- vercel-deploy-check -->
