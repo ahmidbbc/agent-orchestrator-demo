@@ -12,3 +12,5 @@ no deploy step lives in this repo.
 ## Endpoints
 
 - `GET /api/health` — liveness check.
+
+<!-- vercel-deploy-check -->
