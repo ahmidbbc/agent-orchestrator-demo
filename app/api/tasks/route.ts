@@ -1,11 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-
-type Task = {
-  id: string
-  title: string
-}
-
-const tasks: Task[] = []
+import { tasks, Task } from "@/lib/tasks"
 
 export async function POST(request: NextRequest) {
   const body = await request.json().catch(() => null)
