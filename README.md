@@ -15,5 +15,14 @@ no deploy step lives in this repo.
   `agent-orchestrator`'s `internal/demo/playwright/demo.spec.js` — do not
   rename or change its response shape without updating that script.
 - `GET /api/health` — same liveness check, Next.js-idiomatic path.
+- `POST /tasks` — creates a task.
+  - Request body: `{"title":"Write demo task"}`
+  - Response body: `{"id":1,"title":"Write demo task"}`
+  - Example:
+    ```sh
+    curl -X POST http://localhost:3000/tasks \
+      -H 'content-type: application/json' \
+      --data '{"title":"Write demo task"}'
+    ```
 
 <!-- vercel-deploy-check -->
