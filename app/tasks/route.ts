@@ -1,12 +1,6 @@
 import { NextResponse } from "next/server"
 
-type Task = {
-  id: number
-  title: string
-}
-
-const tasks: Task[] = []
-let nextTaskId = 1
+import { createTask } from "./store"
 
 export async function POST(request: Request) {
   let body: unknown
@@ -26,13 +20,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Expected JSON body with string title" }, { status: 400 })
   }
 
-  const task = {
-    id: nextTaskId,
-    title: body.title,
-  }
-
-  nextTaskId += 1
-  tasks.push(task)
+  const task = createTask(body.title)
 
   return NextResponse.json(task, { status: 201 })
 }
