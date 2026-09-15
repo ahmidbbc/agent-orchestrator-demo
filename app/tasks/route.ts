@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { createTask } from "@/lib/tasks"
+import { createTask, getTaskCount } from "@/lib/tasks"
 
 export async function POST(request: Request) {
   let body: unknown
@@ -19,5 +19,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "title must be a string" }, { status: 400 })
   }
 
-  return NextResponse.json(createTask(body.title), { status: 201 })
+  const task = createTask(body.title)
+  return NextResponse.json({ ...task, total: getTaskCount() }, { status: 201 })
 }

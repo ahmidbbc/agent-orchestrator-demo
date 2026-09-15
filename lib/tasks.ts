@@ -8,6 +8,10 @@ export type Task = {
 // Demo storage lasts only for the lifetime of this server process.
 const tasks: Task[] = []
 
+export function getTaskCount(): number {
+  return tasks.length
+}
+
 export function createTask(title: string): Task {
   const task = { id: randomUUID(), title }
   tasks.push(task)
