@@ -1,7 +1,5 @@
-import { randomUUID } from "node:crypto"
 import { NextResponse } from "next/server"
-
-const tasks: { id: string; title: string }[] = []
+import { createTask } from "./store"
 
 export async function POST(request: Request) {
   let body: unknown
@@ -21,8 +19,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "title must be a string" }, { status: 400 })
   }
 
-  const task = { id: randomUUID(), title: body.title }
-  tasks.push(task)
+  const task = createTask(body.title)
 
   return NextResponse.json(task, { status: 201 })
 }
