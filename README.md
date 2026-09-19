@@ -15,5 +15,20 @@ no deploy step lives in this repo.
   `agent-orchestrator`'s `internal/demo/playwright/demo.spec.js` — do not
   rename or change its response shape without updating that script.
 - `GET /api/health` — same liveness check, Next.js-idiomatic path.
+- `POST /tasks` — creates a task. Accepts JSON `{"title": "Example task"}`
+  with a non-empty string title and returns `201 Created` with JSON
+  `{"id": "<generated UUID>", "title": "Example task"}`.
+  Returns `400 Bad Request` with `{"error": "Invalid JSON body"}` for malformed
+  JSON, or `{"error": "title must be a non-empty string"}` for a missing,
+  non-string, empty, or whitespace-only title. Tasks are stored in memory
+  within the server process and reset on restart.
+
+With the app running locally (`npm run dev`), create a task:
+
+```sh
+curl -i -X POST http://localhost:3000/tasks \
+  -H 'Content-Type: application/json' \
+  -d '{"title":"Example task"}'
+```
 
 <!-- vercel-deploy-check -->
