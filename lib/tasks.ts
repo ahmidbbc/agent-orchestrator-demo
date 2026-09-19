@@ -5,7 +5,12 @@ type Task = {
   title: string
 }
 
-const tasks: Task[] = []
+const taskStore = globalThis as typeof globalThis & { demoTasks?: Task[] }
+const tasks = taskStore.demoTasks ??= []
+
+export function getTaskCount(): number {
+  return tasks.length
+}
 
 export function createTask(title: string): Task {
   const task = { id: randomUUID(), title }
