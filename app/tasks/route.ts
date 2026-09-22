@@ -1,13 +1,5 @@
-import { randomUUID } from "node:crypto"
 import { NextResponse } from "next/server"
-
-type Task = {
-  id: string
-  title: string
-}
-
-// Demo storage lasts only for the lifetime of this server instance.
-const tasks: Task[] = []
+import { createTask } from "../../lib/tasks"
 
 export async function POST(request: Request) {
   let body: unknown
@@ -27,8 +19,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "title must be a string" }, { status: 400 })
   }
 
-  const task: Task = { id: randomUUID(), title: body.title }
-  tasks.push(task)
-
+  const task = createTask(body.title)
   return NextResponse.json(task, { status: 201 })
 }
