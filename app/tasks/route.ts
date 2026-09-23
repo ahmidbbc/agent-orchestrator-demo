@@ -23,5 +23,5 @@ export async function POST(request: Request) {
   const task = { id: randomUUID(), title: body.title }
   tasks.push(task)
 
-  return NextResponse.json(task, { status: 201 })
+  return NextResponse.json({ ...task, total: tasks.length }, { status: 201 })
 }
