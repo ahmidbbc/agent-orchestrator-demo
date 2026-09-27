@@ -7,7 +7,12 @@ export type Task = {
 }
 
 // Demo storage: tasks persist only for the lifetime of this server process.
-const tasks: Task[] = []
+const taskStore = globalThis as typeof globalThis & { demoTasks?: Task[] }
+const tasks = taskStore.demoTasks ?? (taskStore.demoTasks = [])
+
+export function getTaskTotal() {
+  return tasks.length
+}
 
 export function createTask(input: Omit<Task, "id">) {
   const task: Task = { id: crypto.randomUUID(), ...input }
