@@ -10,7 +10,12 @@ export type TaskInput = {
 export type Task = TaskInput & { id: string }
 
 // Demo storage is local to this server instance and resets on restart.
-const tasks: Task[] = []
+const taskStore = globalThis as typeof globalThis & { demoTasks?: Task[] }
+const tasks = taskStore.demoTasks ??= []
+
+export function getTaskTotal() {
+  return tasks.length
+}
 
 export function createTask(input: TaskInput) {
   const task: Task = { id: randomUUID(), ...input }
