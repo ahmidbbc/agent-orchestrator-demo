@@ -11,6 +11,10 @@ export type Task = TaskInput & { id: string }
 
 const tasks: Task[] = []
 
+export function getTaskTotal() {
+  return tasks.length
+}
+
 export function createTask(input: TaskInput) {
   const task: Task = { id: randomUUID(), ...input }
   tasks.push(task)
