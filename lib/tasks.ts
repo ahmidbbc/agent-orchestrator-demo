@@ -6,7 +6,13 @@ export type Task = {
   urgent: boolean
 }
 
-const tasks: Task[] = []
+// Route bundles share this store within a server instance, never across instances.
+const taskStore = globalThis as typeof globalThis & { demoTasks?: Task[] }
+const tasks = taskStore.demoTasks ?? (taskStore.demoTasks = [])
+
+export function getTaskTotal() {
+  return tasks.length
+}
 
 export function createTask(input: Omit<Task, "id">) {
   const task: Task = { id: crypto.randomUUID(), ...input }
