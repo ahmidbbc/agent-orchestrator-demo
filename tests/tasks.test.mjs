@@ -5,6 +5,7 @@ import { test } from "node:test"
 // npm test builds first so these tests exercise the production route handler.
 const require = createRequire(import.meta.url)
 const { POST } = require("../.next/server/app/tasks/route.js").routeModule.userland
+const { GET: getSummary } = require("../.next/server/app/tasks/summary/route.js").routeModule.userland
 
 function postTask(body) {
   return POST(new Request("http://localhost/tasks", {
@@ -36,6 +37,11 @@ test("POST /tasks creates a task with category, priority, urgent, and total", as
   assert.equal(secondTask.total, 2)
   assert.equal(secondTask.urgent, false)
   assert.notEqual(secondTask.id, task.id)
+
+  const summaryResponse = await getSummary()
+  assert.equal(summaryResponse.status, 200)
+  assert.equal(summaryResponse.headers.get("cache-control"), "no-store")
+  assert.deepEqual(await summaryResponse.json(), { total: secondTask.total })
 })
 
 test("POST /tasks returns a validation error when title is missing", async () => {
