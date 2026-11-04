@@ -5,6 +5,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        {/* CDN-only styling for /demo-tasks — no Tailwind npm dependency. */}
+        <script src="https://cdn.tailwindcss.com"></script>
+      </head>
       <body>{children}</body>
     </html>
   )
